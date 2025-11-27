@@ -1,0 +1,14 @@
+/* styles.css - simple extra styling for neat layout */
+
+main {
+  min-height: calc(100vh - 120px);
+}
+
+.card.medium {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content {
+  flex: 1 1 auto;
+}

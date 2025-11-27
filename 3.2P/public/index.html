@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Melbourne Events | SIT725 3.2P</title>
+    <!-- Mobile-friendly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Materialize CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Google Icons (optional) -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="blue-grey lighten-5">
+    <!-- Nav bar -->
+    <nav class="blue-grey darken-3">
+      <div class="nav-wrapper container">
+        <a href="#!" class="brand-logo">
+          <i class="material-icons">event</i> Melbourne Events Hub
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container">
+      <div class="section">
+        <h4 class="center-align">Upcoming Events in Melbourne</h4>
+        <p class="center-align grey-text text-darken-1">
+          Explore concerts, festivals, and major sporting events happening around the city.
+        </p>
+      </div>
+
+      <!-- Events row (cards will be injected here) -->
+      <div id="events-row" class="row">
+        <!-- Cards created by main.js -->
+      </div>
+
+      <!-- Error message (hidden by default) -->
+      <div id="error-msg" class="card red lighten-4" style="display:none;">
+        <div class="card-content red-text text-darken-4">
+          <span class="card-title">Oops!</span>
+          <p>We couldn’t load the events right now. Please try again later.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer blue-grey darken-3">
+      <div class="container center-align">
+        <p class="grey-text text-lighten-4">
+          SIT725 Task 3.2P – Events Web App (Express &amp; Materialize)
+        </p>
+      </div>
+    </footer>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Our client script -->
+    <script src="main.js"></script>
+  </body>
+</html>
