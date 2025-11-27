@@ -1,6 +1,3 @@
-// main.js
-// Fetch events from /api/events and render Materialize cards
-
 document.addEventListener('DOMContentLoaded', () => {
   const eventsRow = document.getElementById('events-row');
   const errorMsg = document.getElementById('error-msg');

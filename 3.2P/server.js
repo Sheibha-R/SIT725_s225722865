@@ -1,6 +1,3 @@
-// server.js
-// SIT725 Task 3.2P - Events Web App
-
 const express = require('express');
 const path = require('path');
 
