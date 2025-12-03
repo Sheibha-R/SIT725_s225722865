@@ -1,42 +1,65 @@
+let allEvents = [];
+
 document.addEventListener('DOMContentLoaded', () => {
   const eventsRow = document.getElementById('events-row');
   const errorMsg = document.getElementById('error-msg');
+  const searchInput = document.getElementById('search');
 
-  // Helper to create one event card
-  function createEventCard(event) {
-    const col = document.createElement('div');
-    col.className = 'col s12 m6 l4';
+  // Helper to render a list of events as cards
+  function renderEvents(events) {
+    eventsRow.innerHTML = '';
 
-    const card = document.createElement('div');
-    card.className = 'card medium';
+    if (!events || events.length === 0) {
+      const noResult = document.createElement('p');
+      noResult.className = 'center-align grey-text text-darken-1';
+      noResult.textContent = 'No events match your search.';
+      eventsRow.appendChild(noResult);
+      return;
+    }
 
-    const cardContent = document.createElement('div');
-    cardContent.className = 'card-content';
+    events.forEach((event) => {
+      const col = document.createElement('div');
+      col.className = 'col s12 m6 l4';
 
-    const title = document.createElement('span');
-    title.className = 'card-title';
-    title.textContent = event.name;
+      col.innerHTML = `
+        <div class="card medium event-card hoverable">
+          <div class="card-image">
+            <img src="${event.imageUrl}" alt="${event.name}">
+            <span class="card-title event-card-title">${event.name}</span>
+            <a class="btn-floating halfway-fab waves-effect waves-light red favourite-btn" title="Mark as favourite">
+              <i class="material-icons">favorite_border</i>
+            </a>
+          </div>
+          <div class="card-content">
+            <p>
+              <i class="material-icons tiny">date_range</i>
+              ${event.date}
+            </p>
+            <p>
+              <i class="material-icons tiny">place</i>
+              ${event.location}
+            </p>
+            <p class="grey-text text-darken-1">
+              ${event.description}
+            </p>
+          </div>
+        </div>
+      `;
 
-    const date = document.createElement('p');
-    date.innerHTML = `<i class="material-icons tiny">date_range</i> ${event.date}`;
+      const card = col.querySelector('.event-card');
+      const favBtn = col.querySelector('.favourite-btn');
+      const favIcon = favBtn.querySelector('i');
 
-    const location = document.createElement('p');
-    location.innerHTML = `<i class="material-icons tiny">place</i> ${event.location}`;
+      // Toggle favourite state (simple front-end interaction)
+      favBtn.addEventListener('click', () => {
+        card.classList.toggle('favourite');
+        favIcon.textContent = card.classList.contains('favourite')
+          ? 'favorite'
+          : 'favorite_border';
+      });
 
-    const desc = document.createElement('p');
-    desc.className = 'grey-text text-darken-1';
-    desc.textContent = event.description;
-
-    cardContent.appendChild(title);
-    cardContent.appendChild(date);
-    cardContent.appendChild(location);
-    cardContent.appendChild(document.createElement('br'));
-    cardContent.appendChild(desc);
-
-    card.appendChild(cardContent);
-    col.appendChild(card);
-
-    return col;
+      eventsRow.appendChild(col);
+    });
   }
 
   // Fetch events from the server
@@ -48,15 +71,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then((events) => {
-      eventsRow.innerHTML = ''; // clear content
-
-      events.forEach((event) => {
-        const card = createEventCard(event);
-        eventsRow.appendChild(card);
-      });
+      allEvents = events || [];
+      renderEvents(allEvents);
     })
     .catch((error) => {
       console.error('Error fetching events:', error);
       errorMsg.style.display = 'block';
     });
+
+  // Live search: filter by name or location
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase().trim();
+
+      if (!term) {
+        // Empty search -> show all events
+        renderEvents(allEvents);
+        return;
+      }
+
+      const filtered = allEvents.filter((event) => {
+        const nameMatch = event.name.toLowerCase().includes(term);
+        const locationMatch = event.location.toLowerCase().includes(term);
+        return nameMatch || locationMatch;
+      });
+
+      renderEvents(filtered);
+    });
+  }
 });
