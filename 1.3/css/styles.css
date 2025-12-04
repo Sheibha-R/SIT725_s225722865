@@ -1,0 +1,83 @@
+/* ==== Global layout & background ==== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Soft gradient background */
+  background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Let the main content sit in the middle nicely */
+.container {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* ==== Card-style wrapper for content ==== */
+.row {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 40px 25px 30px;
+}
+
+/* ==== Heading styling ==== */
+h1#heading {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #1a237e;
+  margin-bottom: 30px;
+}
+
+/* ==== Button styling ==== */
+#changeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #90caf9;     /* <-- FIXED pill color (light blue) */
+  color: black !important;        /* <-- ALWAYS BLACK TEXT */
+
+  font-size: 18px;
+  padding: 12px 32px;
+  border-radius: 999px;
+  border: none;
+  min-width: 150px;
+  text-transform: none;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+#changeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+#changeBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ==== Small screen tweaks ==== */
+@media (max-width: 600px) {
+  .row {
+    padding: 30px 18px 24px;
+  }
+
+  h1#heading {
+    font-size: 26px;
+  }
+
+  #changeBtn {
+    width: 100%;
+    font-size: 16px;
+  }
+}
