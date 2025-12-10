@@ -1,3 +1,7 @@
+// public/main.js
+// Fetch events from /api/events and render Materialize cards
+// with images, live search, and a simple "favourite" toggle.
+
 let allEvents = [];
 
 document.addEventListener('DOMContentLoaded', () => {

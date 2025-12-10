@@ -1,3 +1,6 @@
+/* public/styles.css */
+
+/* Make sure main content fills the viewport nicely */
 main {
   min-height: calc(100vh - 120px);
 }
@@ -26,10 +29,40 @@ main {
   flex: 1 1 auto;
 }
 
-/* Event card image styling */
+.favourite-btn {
+  top: 10px !important;          /* pull it upward */
+  right: 10px !important;        /* move slightly inward */
+  background-color: #e53935 !important; /* strong red */
+  opacity: 1 !important;         /* ensure full visibility */
+}
+
+.favourite-btn i {
+  font-size: 24px !important;    /* bigger heart icon */
+  color: white !important;       /* white icon for contrast */
+}
+
+/* Ensure all card images have the SAME HEIGHT */
 .event-card .card-image img {
-  height: 180px;
+  height: 180px !important;
+  width: 100%;
   object-fit: cover;
+}
+
+/* Ensure all cards have SAME HEIGHT */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  height: 430px;  /* ← Adjust this if needed */
+}
+
+/* Allow card content to stretch evenly */
+.event-card .card-content {
+  flex-grow: 1;
+}
+
+/* Ensure favourite button does not break layout */
+.favourite-btn {
+  z-index: 10 !important;
 }
 
 /* Card title overlay readability */
@@ -49,27 +82,8 @@ main {
 }
 
 /* Highlight favourites with a top border */
-/* Make favourite button clearly visible */
-.favourite-btn {
-  top: 10px !important;          /* pull it upward */
-  right: 10px !important;        /* move slightly inward */
-  background-color: #e53935 !important; /* strong red */
-  opacity: 1 !important;         /* ensure full visibility */
-}
-
-.favourite-btn i {
-  font-size: 24px !important;    /* bigger heart icon */
-  color: white !important;       /* white icon for contrast */
-}
-
-/* Ensure the button stays above the card image/title */
-.event-card .card-image {
-  position: relative;
-  overflow: visible !important;
-}
-
-.event-card .card-image img {
-  border-radius: 6px 6px 0 0;
+.event-card.favourite {
+  border-top: 4px solid #e53935;
 }
 
 /* Small tweaks for mobile */
