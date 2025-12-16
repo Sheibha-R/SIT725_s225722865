@@ -51,22 +51,23 @@
 
         for (const b of books) {
           const li = document.createElement("li");
-          li.textContent = `${b.title} ${b.price} ${b.currency || "AUD"}`;
+          const currency = b.currency || b.Currency || "AUD";
+          li.textContent = `${b.title} ${b.price} ${currency}`;
           li.addEventListener("click", () => loadDetails(b.id));
           bookList.appendChild(li);
         }
       }
 
       function renderDetails(book) {
+        const currency = book.currency || book.Currency || "AUD";
         detailsPanel.innerHTML = `
-          <div class="row"><span class="label">Title:</span> ${book.title}</div>
-          <div class="row"><span class="label">Author:</span> ${book.author}</div>
-          <div class="row"><span class="label">Year:</span> ${book.year}</div>
-          <div class="row"><span class="label">Genre:</span> ${book.genre}</div>
-          <div class="row"><span class="label">Summary:</span> ${book.summary}</div>
-          <div class="row"><span class="label">Price:</span> ${book.price} ${book.currency || "AUD"}</div>
-        `;
-      }
+        <div class="row"><span class="label">Title:</span> ${book.title}</div>
+        <div class="row"><span class="label">Author:</span> ${book.author}</div>
+        <div class="row"><span class="label">Year:</span> ${book.year}</div>
+        <div class="row"><span class="label">Genre:</span> ${book.genre}</div>
+        <div class="row"><span class="label">Summary:</span> ${book.summary}</div>
+        <div class="row"><span class="label">Price:</span> ${book.price} ${currency}</div>
+`;}
 
       async function loadAllBooks() {
         detailsPanel.innerHTML = `<div class="muted">Loading...</div>`;
