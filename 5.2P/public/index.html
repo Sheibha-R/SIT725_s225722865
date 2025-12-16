@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIT725 5.2P - Books Catalog</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 24px;
+        line-height: 1.5;
+      }
+      h1 {
+        margin-bottom: 6px;
+      }
+      .sub {
+        margin-top: 0;
+        color: #555;
+      }
+      ul {
+        padding-left: 18px;
+      }
+      li {
+        margin: 10px 0;
+      }
+      .author {
+        color: #333;
+      }
+      .status {
+        margin-top: 14px;
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>📚 Books Catalog</h1>
+    <p class="sub">SIT725 Task 5.2P — Titles & Authors</p>
+
+    <ul id="booksList"></ul>
+    <div id="status" class="status">Loading books...</div>
+
+    <script>
+      const booksList = document.getElementById('booksList');
+      const statusEl = document.getElementById('status');
+
+      function renderBooks(books) {
+        booksList.innerHTML = '';
+
+        if (!Array.isArray(books) || books.length === 0) {
+          statusEl.textContent = 'No books found.';
+          return;
+        }
+
+        for (const book of books) {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${book.title}</strong> — <span class="author">${book.author}</span>`;
+          booksList.appendChild(li);
+        }
+
+        statusEl.textContent = `Loaded ${books.length} books.`;
+      }
+
+      // Fetch on page load 
+      window.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const res = await fetch('/api/books');
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+          const body = await res.json();
+          renderBooks(body.data);
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = 'Error loading books. Check console and server.';
+        }
+      });
+    </script>
+  </body>
+</html>
