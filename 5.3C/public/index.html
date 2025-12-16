@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIT725 5.3C - Books</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      h2 { margin: 0 0 16px; }
+      button { padding: 10px 14px; cursor: pointer; }
+      .wrap { display: grid; grid-template-columns: 320px 1fr; gap: 20px; margin-top: 18px; }
+      .panel { border: 1px solid #ccc; padding: 12px; border-radius: 6px; min-height: 180px; }
+      ul { padding-left: 18px; }
+      li { margin: 8px 0; cursor: pointer; }
+      li:hover { text-decoration: underline; }
+      .muted { color: #666; font-size: 14px; }
+      .label { font-weight: bold; width: 90px; display: inline-block; }
+      .row { margin: 6px 0; }
+    </style>
+  </head>
+
+  <body>
+    <h2>Books Catalogue developed by s225722865</h2>
+    <p class="muted">Click the button below to get all books from the server:</p>
+
+    <button id="btnLoad">Get all books</button>
+
+    <div class="wrap">
+      <div class="panel">
+        <div class="muted">Book list (click a title to view details)</div>
+        <ul id="bookList"></ul>
+      </div>
+
+      <div class="panel" id="detailsPanel">
+        <div class="muted">Book details will appear here</div>
+      </div>
+    </div>
+
+    <script>
+      const btnLoad = document.getElementById("btnLoad");
+      const bookList = document.getElementById("bookList");
+      const detailsPanel = document.getElementById("detailsPanel");
+
+      function renderList(books) {
+        bookList.innerHTML = "";
+
+        if (!Array.isArray(books) || books.length === 0) {
+          bookList.innerHTML = "<li>No books found</li>";
+          return;
+        }
+
+        for (const b of books) {
+          const li = document.createElement("li");
+          li.textContent = `${b.title} ${b.price} ${b.currency || "AUD"}`;
+          li.addEventListener("click", () => loadDetails(b.id));
+          bookList.appendChild(li);
+        }
+      }
+
+      function renderDetails(book) {
+        detailsPanel.innerHTML = `
+          <div class="row"><span class="label">Title:</span> ${book.title}</div>
+          <div class="row"><span class="label">Author:</span> ${book.author}</div>
+          <div class="row"><span class="label">Year:</span> ${book.year}</div>
+          <div class="row"><span class="label">Genre:</span> ${book.genre}</div>
+          <div class="row"><span class="label">Summary:</span> ${book.summary}</div>
+          <div class="row"><span class="label">Price:</span> ${book.price} ${book.currency || "AUD"}</div>
+        `;
+      }
+
+      async function loadAllBooks() {
+        detailsPanel.innerHTML = `<div class="muted">Loading...</div>`;
+        const res = await fetch("/api/books");
+        const body = await res.json();
+        renderList(body.data);
+        detailsPanel.innerHTML = `<div class="muted">Click a book title to view full details.</div>`;
+      }
+
+      async function loadDetails(id) {
+        detailsPanel.innerHTML = `<div class="muted">Loading details...</div>`;
+        const res = await fetch(`/api/books/${id}`);
+        if (!res.ok) {
+          detailsPanel.innerHTML = `<div class="muted">Book not found.</div>`;
+          return;
+        }
+        const body = await res.json();
+        renderDetails(body.data);
+      }
+
+      btnLoad.addEventListener("click", () => {
+        loadAllBooks().catch((err) => {
+          console.error(err);
+          detailsPanel.innerHTML = `<div class="muted">Error loading books. Check console.</div>`;
+        });
+      });
+    </script>
+  </body>
+</html>
