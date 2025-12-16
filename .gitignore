@@ -1,0 +1,30 @@
+# ===============================
+# Node.js / SIT725 .gitignore
+# ===============================
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
+
+# Build output
+dist/
+build/
+.tmp/
