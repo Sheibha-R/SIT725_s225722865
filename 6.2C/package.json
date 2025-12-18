@@ -1,0 +1,24 @@
+{
+  "name": "6.2c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --reporter spec \"test/**/*.test.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "chai": "^6.2.1",
+    "mocha": "^11.7.5",
+    "supertest": "^7.1.4"
+  }
+}
